@@ -15,23 +15,23 @@ Slurm Now depends on `pyslurm`, whose version must be compatible with your Slurm
 Install Slurm Now with `pip`:
 
 ```sh
-pip install git+https://github.com/schmidt-jake/slurm-now.git
+pip install git+https://github.com/schmidt-jake/slurm_now.git
 ```
 
 Or add Slurm Now to your project with `uv`:
 
 ```sh
-uv add git+https://github.com/schmidt-jake/slurm-now
+uv add git+https://github.com/schmidt-jake/slurm_now
 ```
 
 Install the `table` extra to enable verbose CLI output:
 
 ```sh
-pip install git+https://github.com/schmidt-jake/slurm-now.git[table]
+pip install git+https://github.com/schmidt-jake/slurm_now.git[table]
 ```
 
 ```sh
-uv add git+https://github.com/schmidt-jake/slurm-now --extra=table
+uv add git+https://github.com/schmidt-jake/slurm_now --extra=table
 ```
 
 ## Getting Started
@@ -39,13 +39,13 @@ uv add git+https://github.com/schmidt-jake/slurm-now --extra=table
 Use the CLI:
 
 ```sh
-slurm-now --help
+slurm_now --help
 ```
 
 Example:
 
 ```sh
-slurm-now --min-world-size=2 --gpu-type='a40|a100' --min-cpu-per-gpu=12
+slurm_now --min-world-size=2 --gpu-type='a40|a100' --min-cpu-per-gpu=12
 ```
 
 ```console
@@ -56,10 +56,10 @@ Achieve up to world size 6 using --nodes=6 --ntasks-per-node=1 --gpus-per-node=a
 Achieve up to world size 3 using --nodes=1 --ntasks-per-node=3 --gpus-per-node=a100:3
 ```
 
-To show real-time cluster availability, combine `slurm-now` with `watch`:
+To show real-time cluster availability, combine `slurm_now` with `watch`:
 
 ```sh
-watch slurm-now ...
+watch slurm_now ...
 ```
 
 Use the Python API:
