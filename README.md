@@ -45,15 +45,13 @@ slurm_now --help
 Example:
 
 ```sh
-slurm_now --min-world-size=2 --gpu-type='a40|a100' --min-cpu-per-gpu=12
+slurm_now --min-world-size=4 --gpu-type='a40|a100' --min-cpu-per-gpu=4 --min-sys-mem-per-gpu-GB=20
 ```
 
 ```console
-Achieve up to world size 4 using --nodes=1 --ntasks-per-node=4 --gpus-per-node=a40:4
-Achieve up to world size 4 using --nodes=4 --ntasks-per-node=1 --gpus-per-node=a40:1
-Achieve up to world size 6 using --nodes=3 --ntasks-per-node=2 --gpus-per-node=a100:2
-Achieve up to world size 6 using --nodes=6 --ntasks-per-node=1 --gpus-per-node=a100:1
-Achieve up to world size 3 using --nodes=1 --ntasks-per-node=3 --gpus-per-node=a100:3
+Achieve up to world size 6 using --nodes=3 --ntasks-per-node=2 --gpus-per-node=a40:2 --cpus-per-task=4.0 --mem-per-gpu=20.0 --partition=gpuA40x4-preempt
+Achieve up to world size 6 using --nodes=6 --ntasks-per-node=1 --gpus-per-node=a40:1 --cpus-per-task=4.0 --mem-per-gpu=20.0 --partition=gpuA40x4-preempt
+Achieve up to world size 4 using --nodes=1 --ntasks-per-node=4 --gpus-per-node=a40:4 --cpus-per-task=4.0 --mem-per-gpu=20.0 --partition=gpuA40x4-preempt
 ```
 
 To show real-time cluster availability, combine `slurm_now` with `watch`:
@@ -67,15 +65,18 @@ Use the Python API:
 ```python
 from slurm_now import run_search
 
-for gpu_type, min_idle_gpus_per_node, world_size, node_group in run_search(min_world_size=8):
+for gpu_type, min_idle_gpus_per_node, world_size, node_group, partitions in run_search(min_world_size=8):
     print(
         f"Achieve up to world size {world_size} using "
         f"--nodes={len(node_group)} "
         f"--ntasks-per-node={min_idle_gpus_per_node} "
-        f"--gpus-per-node={gpu_type}:{min_idle_gpus_per_node}"
+        f"--gpus-per-node={gpu_type}:{min_idle_gpus_per_node} "
+        f"--cpus-per-task={args.min_cpu_per_gpu} "
+        f"--mem-per-gpu={args.min_sys_mem_per_gpu_GB} "
+        f"--partition={','.join(partitions)}"
     )
 ```
 
 ## Limitations
 
-Slurm Now currently doesn't consider QoS constraints.
+Slurm Now currently doesn't consider QoS constraints or job time limits.

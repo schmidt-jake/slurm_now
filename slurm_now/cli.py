@@ -40,7 +40,7 @@ def cli():
     )
     parser.add_argument("-v", "--verbose", action="store_true")
     args = parser.parse_args()
-    for gpu_type, min_idle_gpus_per_node, world_size, node_group in run_search(
+    for gpu_type, min_idle_gpus_per_node, world_size, node_group, partitions in run_search(
         min_world_size=args.min_world_size,
         gpu_type=args.gpu_type,
         min_cpu_per_gpu=args.min_cpu_per_gpu,
@@ -51,7 +51,10 @@ def cli():
             f"Achieve up to world size {world_size} using "
             f"--nodes={len(node_group)} "
             f"--ntasks-per-node={min_idle_gpus_per_node} "
-            f"--gpus-per-node={gpu_type}:{min_idle_gpus_per_node}"
+            f"--gpus-per-node={gpu_type}:{min_idle_gpus_per_node} "
+            f"--cpus-per-task={args.min_cpu_per_gpu} "
+            f"--mem-per-gpu={args.min_sys_mem_per_gpu_GB} "
+            f"--partition={','.join(partitions)}"
         )
         if PRINT_TABLE and args.verbose:
             print(tabulate(node_group, headers="keys"))

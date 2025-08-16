@@ -2,6 +2,7 @@ import logging
 import re
 from collections import defaultdict
 from collections.abc import Generator
+from functools import reduce
 from typing import NamedTuple
 
 import pyslurm
@@ -79,10 +80,16 @@ def _sort_key(x: tuple[tuple[str, int], set[NodeGPUs]]) -> tuple[str, int, int]:
     return gpu_type, idle_gpus_per_node * len(node_group), idle_gpus_per_node
 
 
-def run_search(min_world_size: int, *args, **kwargs) -> Generator[tuple[str, int, int, set[NodeGPUs]]]:
+def run_search(min_world_size: int, *args, **kwargs) -> Generator[tuple[str, int, int, set[NodeGPUs], set[str]]]:
     nodes = set(find_nodes(*args, **kwargs))
     node_groups = organize_node_groups(nodes)
     for (gpu_type, min_idle_gpus_per_node), node_group in sorted(node_groups.items(), key=_sort_key, reverse=True):
         world_size = min_idle_gpus_per_node * len(node_group)
         if world_size >= min_world_size:
-            yield gpu_type, min_idle_gpus_per_node, world_size, node_group
+            yield (
+                gpu_type,
+                min_idle_gpus_per_node,
+                world_size,
+                node_group,
+                reduce(set.intersection, (node.partitions for node in node_group)),
+            )
