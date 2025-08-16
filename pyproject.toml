@@ -1,0 +1,59 @@
+[project]
+dependencies = ["pyslurm"]
+dynamic = ["version"]
+name = "slurm_now"
+readme = "README.md"
+requires-python = ">=3.8,<4"
+scripts = { slurm-now = "slurm_now.cli:cli" }
+
+[project.optional-dependencies]
+table = ["tabulate"]
+
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools-scm>=8", "setuptools>=64"]
+
+[tool.setuptools_scm]
+# intentionally blank
+
+[tool.setuptools]
+packages = ["slurm_now"]
+
+[tool.uv]
+package = true
+
+[tool.uv.sources]
+pyslurm = { git = "https://github.com/PySlurm/pyslurm", tag = "23.11.x" }
+
+[dependency-groups]
+dev = ["mypy", "pre-commit", "pytest", "ruff", "types-tabulate"]
+
+[tool.ruff]
+fix = true
+line-length = 120
+src = ["slurm_now"]
+target-version = "py313"
+
+[tool.ruff.lint]
+ignore = ["N815", "N803"]
+per-file-ignores = { "tests/**/*test.py" = ["S101"] }
+select = ["BLE", "C90", "D", "E", "F", "I", "N", "PGH", "S", "UP", "W"]
+unfixable = ["F401"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.mypy]
+exclude = ".venv"
+python_version = "3.13"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+# https://docs.pytest.org/en/stable/reference/reference.html#configuration-options
+# addopts = "-vs --strict-markers --tb=long --jaxtyping-packages=metabolo_genes,tests,beartype.beartype"
+addopts = "-s --strict-markers --tb=short -r=A"
+# faulthandler_timeout = 600
+log_cli = true
+log_cli_format = "%(asctime)s %(processName)s %(levelname)s %(name)s %(pathname)s:%(lineno)d %(message)s"
+log_cli_level = "DEBUG"
+testpaths = ["tests"]
