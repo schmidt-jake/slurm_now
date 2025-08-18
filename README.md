@@ -8,6 +8,8 @@ For a world size `W`, system-memory-per-GPU `M`, and CPU-to-GPU ratio `C`, Slurm
 
 In the case of multiple solutions, they will be sorted by `W` descending and then `G` descending.
 
+This project is inspired by the `gnodes` command from the wonderful [slurm_utils](https://github.com/birc-aeh/slurm-utils).
+
 ## Installation
 
 Install Slurm Now with `pip`:
