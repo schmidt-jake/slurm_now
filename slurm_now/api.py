@@ -5,7 +5,7 @@ import subprocess
 from collections import defaultdict
 from collections.abc import Generator
 from functools import reduce
-from typing import Any, NamedTuple, Self
+from typing import Any, NamedTuple
 
 logger = logging.getLogger(__name__)
 
@@ -37,7 +37,7 @@ class NodeGPUs(NamedTuple):
         return hash((self.node_name, self.gpu_type))
 
     @classmethod
-    def from_dict(cls: type["Self"], node: dict[str, Any]) -> "Self":
+    def from_dict(cls: type["NodeGPUs"], node: dict[str, Any]) -> "NodeGPUs":
         # get configured GPUs
         gres_match = GRES_REGEX.match(node["gres"])
         if not gres_match:

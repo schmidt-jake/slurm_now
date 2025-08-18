@@ -2,7 +2,7 @@
 dynamic = ["version"]
 name = "slurm_now"
 readme = "README.md"
-requires-python = ">=3.8,<4"
+requires-python = ">=3,<4"
 scripts = { snow = "slurm_now.cli:cli" }
 
 [project.optional-dependencies]
@@ -22,7 +22,7 @@ packages = ["slurm_now"]
 package = true
 
 [dependency-groups]
-dev = ["mypy", "pre-commit", "pytest", "ruff", "types-tabulate"]
+dev = ["mypy", "pre-commit", "ruff", "types-tabulate"]
 
 [tool.ruff]
 fix = true
@@ -43,13 +43,3 @@ convention = "google"
 exclude = ".venv"
 python_version = "3.13"
 ignore_missing_imports = true
-
-[tool.pytest.ini_options]
-# https://docs.pytest.org/en/stable/reference/reference.html#configuration-options
-# addopts = "-vs --strict-markers --tb=long --jaxtyping-packages=metabolo_genes,tests,beartype.beartype"
-addopts = "-s --strict-markers --tb=short -r=A"
-# faulthandler_timeout = 600
-log_cli = true
-log_cli_format = "%(asctime)s %(processName)s %(levelname)s %(name)s %(pathname)s:%(lineno)d %(message)s"
-log_cli_level = "DEBUG"
-testpaths = ["tests"]

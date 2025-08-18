@@ -1,0 +1,51 @@
+minimum_pre_commit_version: "2.9.2"
+default_language_version:
+  python: python3.13
+default_install_hook_types:
+  - pre-commit
+  - post-checkout
+  - post-merge
+  - post-rewrite
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-executables-have-shebangs
+      - id: check-json
+      - id: check-shebang-scripts-are-executable
+        exclude: "^.*.sbatch$"
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-toml
+      - id: destroyed-symlinks
+      - id: check-yaml
+      - id: check-vcs-permalinks
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+      - id: name-tests-test
+      - id: pretty-format-json
+        exclude_types: [jupyter]
+        args:
+          - --autofix
+      - id: sort-simple-yaml
+        files: "^config/"
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.8.11
+    hooks:
+      - id: uv-sync
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.12.9
+    hooks:
+      - id: ruff-check
+      - id: ruff-format
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.33.3
+    hooks:
+      - id: check-github-workflows
+      - id: check-jsonschema
+        name: validate pyproject.toml
+        files: ^pyproject\.toml$
+        types_or: [toml]
+        args: ["--schemafile", "https://json.schemastore.org/pyproject.json"]
