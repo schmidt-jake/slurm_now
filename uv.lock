@@ -342,11 +342,6 @@ wheels = [
 ]
 
 [[package]]
-name = "pyslurm"
-version = "23.11.1"
-source = { git = "https://github.com/PySlurm/pyslurm?tag=23.11.x#e172b3dc19a19c7ac29f82dd6ccddb39d37a226d" }
-
-[[package]]
 name = "pytest"
 version = "8.3.5"
 source = { registry = "https://pypi.org/simple" }
@@ -476,9 +471,6 @@ wheels = [
 [[package]]
 name = "slurm-now"
 source = { editable = "." }
-dependencies = [
-    { name = "pyslurm" },
-]
 
 [package.optional-dependencies]
 table = [
@@ -498,10 +490,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [
-    { name = "pyslurm", git = "https://github.com/PySlurm/pyslurm?tag=23.11.x" },
-    { name = "tabulate", marker = "extra == 'table'" },
-]
+requires-dist = [{ name = "tabulate", marker = "extra == 'table'" }]
 provides-extras = ["table"]
 
 [package.metadata.requires-dev]

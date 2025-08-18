@@ -10,8 +10,6 @@ In the case of multiple solutions, they will be sorted by `W` descending and the
 
 ## Installation
 
-Slurm Now depends on `pyslurm`, whose version must be compatible with your Slurm. First check your slurm version with `sacct --version`, then install `pyslurm` from GitHub: `pip install git+https://github.com/PySlurm/pyslurm.git@${MY_SLURM_VERSION}`. This can take a few minutes.
-
 Install Slurm Now with `pip`:
 
 ```sh
@@ -36,16 +34,16 @@ uv add git+https://github.com/schmidt-jake/slurm_now --extra=table
 
 ## Getting Started
 
-Use the CLI:
+Use the CLI (`snow`):
 
 ```sh
-slurm_now --help
+snow --help
 ```
 
 Example:
 
 ```sh
-slurm_now --min-world-size=4 --gpu-type='a40|a100' --min-cpu-per-gpu=4 --min-sys-mem-per-gpu-GB=20
+snow --min-world-size=4 --gpu-type='a40|a100' --min-cpu-per-gpu=4 --min-sys-mem-per-gpu-GB=20
 ```
 
 ```console
@@ -54,10 +52,10 @@ Achieve up to world size 6 using --nodes=6 --ntasks-per-node=1 --gpus-per-node=a
 Achieve up to world size 4 using --nodes=1 --ntasks-per-node=4 --gpus-per-node=a40:4 --cpus-per-task=4.0 --mem-per-gpu=20.0 --partition=gpuA40x4-preempt
 ```
 
-To show real-time cluster availability, combine `slurm_now` with `watch`:
+To show real-time cluster availability, combine `snow` with `watch`:
 
 ```sh
-watch slurm_now ...
+watch snow ...
 ```
 
 Use the Python API:

@@ -1,10 +1,9 @@
 [project]
-dependencies = ["pyslurm"]
 dynamic = ["version"]
 name = "slurm_now"
 readme = "README.md"
 requires-python = ">=3.8,<4"
-scripts = { slurm_now = "slurm_now.cli:cli" }
+scripts = { snow = "slurm_now.cli:cli" }
 
 [project.optional-dependencies]
 table = ["tabulate"]
@@ -21,9 +20,6 @@ packages = ["slurm_now"]
 
 [tool.uv]
 package = true
-
-[tool.uv.sources]
-pyslurm = { git = "https://github.com/PySlurm/pyslurm", tag = "23.11.x" }
 
 [dependency-groups]
 dev = ["mypy", "pre-commit", "pytest", "ruff", "types-tabulate"]

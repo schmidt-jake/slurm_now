@@ -22,13 +22,13 @@ def cli():
         "-g", "--gpu-type", type=str, default=r"^.*$", help="Regex pattern to limit the search to a specific GPU type."
     )
     parser.add_argument(
-        "-c", "--min-cpu-per-gpu", type=float, default=0.0, help="The minimum ratio of CPUs to free GPUs required."
+        "-c", "--min-cpu-per-gpu", type=float, default=1.0, help="The minimum ratio of CPUs to free GPUs required."
     )
     parser.add_argument(
         "-m",
         "--min-sys-mem-per-gpu-GB",
         type=float,
-        default=0.0,
+        default=0.1,
         help="The minimum system RAM per GPU required (in GB).",
     )
     parser.add_argument(
@@ -52,8 +52,8 @@ def cli():
             f"--nodes={len(node_group)} "
             f"--ntasks-per-node={min_idle_gpus_per_node} "
             f"--gpus-per-node={gpu_type}:{min_idle_gpus_per_node} "
-            f"--cpus-per-task={args.min_cpu_per_gpu} "
-            f"--mem-per-gpu={args.min_sys_mem_per_gpu_GB} "
+            f"--cpus-per-task={round(min(node.idle_cpu_per_gpu for node in node_group))} "
+            f"--mem-per-gpu={round(min(node.idle_sys_mem_per_gpu_GB for node in node_group))} "
             f"--partition={','.join(partitions)}"
         )
         if PRINT_TABLE and args.verbose:
